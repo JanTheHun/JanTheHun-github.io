@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build_github": "ng build --prod --baseHref=\"https://janthehun.github.io\"",
+    "build_github": "ng build --prod --baseHref=\"JanTheHun-github.io\"",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
