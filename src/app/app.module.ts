@@ -5,7 +5,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ApiKeyInterceptor } from './interceptors/api-key.interceptor';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MatCardModule } from '@angular/material/card';
 @NgModule({
   declarations: [
     AppComponent
@@ -13,7 +15,11 @@ import { ApiKeyInterceptor } from './interceptors/api-key.interceptor';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatCardModule
+  ],
+  exports: [
   ],
   providers: [
     {
