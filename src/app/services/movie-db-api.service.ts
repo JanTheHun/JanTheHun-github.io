@@ -6,8 +6,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MovieDbApiService {
 
-  imageURI: string;
-
   constructor(
     private http: HttpClient
   ) { }

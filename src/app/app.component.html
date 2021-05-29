@@ -1,19 +1,23 @@
 <h4>VividMind teszt - Pomucz János</h4>
-<!-- 
-<p>pages: {{totalPages}}</p>
-<p>results: {{totalResults}}</p> -->
 
 <mat-card *ngFor="let movie of moviesList" class="movieCard">
-  <ng-container *ngIf="movie; else emptyMovieCard">
-    <mat-card-header>
-      {{movie.title}}
-    </mat-card-header>
-    <mat-card-content>
-      <p>{{movie.release_date}}</p>
-      <img [src]="configuration.images.secure_base_url + 'w300' + movie.backdrop_path" />
-    </mat-card-content>
-  </ng-container>
-  <ng-template #emptyMovieCard>
-    ...
-  </ng-template>
+
+  <mat-card-header>
+    {{movie.title}}
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>{{movie.release_date}}</p>
+    <img [src]="movie.imageURI" />
+  </mat-card-content>
 </mat-card>
+
+<div id="pageBottom"
+  class="movieCard"
+  appObserveVisibility
+  [debounceTime]="0"
+  [threshold]="1"
+  (visible)="onPageBottomVisible()"
+  #pageBottom>
+  Lap alja
+</div>

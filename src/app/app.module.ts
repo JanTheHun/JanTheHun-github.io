@@ -8,9 +8,11 @@ import { ApiKeyInterceptor } from './interceptors/api-key.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatCardModule } from '@angular/material/card';
+import { ObserveVisibilityDirective } from './directives/observe-visibility.directive';
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ObserveVisibilityDirective
   ],
   imports: [
     BrowserModule,

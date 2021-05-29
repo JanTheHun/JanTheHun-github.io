@@ -23,7 +23,6 @@ export class ApiKeyInterceptor implements HttpInterceptor {
         api_key: this.apiKey
       }
     });
-    console.log(clonedRequest);
     return next.handle(clonedRequest);
   }
 }
