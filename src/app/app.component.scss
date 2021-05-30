@@ -6,6 +6,22 @@
     vertical-align: top;
 }
 
+.movieCardTitle {
+    height: 28px;
+    overflow: hidden;
+}
+
+.movieCardImage {
+    max-height: calc(100% - 50px);
+    object-fit: scale-down;
+}
+
 #pageBottom {
-    height: 20px;
+    height: 50px;
+    line-height: 50px;
+    width: calc(100% - 20px);
+    text-align: center;
+    border: solid 1px;
+    box-sizing: border-box;
+    margin: 10px;
 }
