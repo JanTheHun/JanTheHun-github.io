@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service'
 import { UserAuth } from './classes/user-auth';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,7 @@ export class AppComponent {
   user: UserAuth
 
   constructor(
+    private router: Router,
     private authenticationService: AuthenticationService
   ) {}
 
@@ -20,6 +22,11 @@ export class AppComponent {
   }
 
   ngOnInit(): void {
+    const path = localStorage.getItem('path');
+    if (path) {
+      localStorage.removeItem('path');
+      this.router.navigate([path]);
+    }
     this.authenticationService.activeUserSubject.subscribe(user => {
       this.user = user;
     })
