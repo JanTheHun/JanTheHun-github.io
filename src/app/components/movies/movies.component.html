@@ -1,5 +1,3 @@
-<h4>VividMind teszt - Pomucz János</h4>
-
 <mat-card *ngFor="let movie of moviesList" class="movieCard">
 
   <mat-card-title class="movieCardTitle">
@@ -23,9 +21,9 @@
   (visible)="onPageBottomVisible()"
   #pageBottom>
   <ng-container *ngIf="(!lastLoadedPage || lastLoadedPage < totalPages) else noMorePages">
-    Lap alja
+    Load more
   </ng-container>
   <ng-template #noMorePages>
-    Vége!
+    End of pages
   </ng-template>  
 </div>

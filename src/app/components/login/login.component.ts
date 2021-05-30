@@ -54,7 +54,9 @@ export class LoginComponent {
   }
 
   ngAfterViewInit() {
-    this.userNameInput.nativeElement.focus();
+    setTimeout(() => {
+      this.userNameInput.nativeElement.focus();
+    }, 0)
   }
 
 }

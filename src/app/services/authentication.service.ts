@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserAuth } from '../classes/user-auth';
 import { UserLogin } from '../classes/user-login';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs'
 
 const USERS: UserLogin[] = [
   {
@@ -30,12 +31,14 @@ const CREDENTIALS: UserAuth[] = [
 })
 export class AuthenticationService {
 
-  activeUser: UserAuth 
+  activeUser: UserAuth;
+  activeUserSubject: BehaviorSubject<UserAuth>;
 
   constructor(
     private router: Router
   ) {
     this.resetActiveUser();
+    this.activeUserSubject = new BehaviorSubject(this.activeUser)
   }
 
   resetActiveUser() {
@@ -55,6 +58,7 @@ export class AuthenticationService {
       if (userFound) {
         const userData: UserAuth = CREDENTIALS.find(u => { return u.userName === userFound.userName })
         this.activeUser = userData;
+        this.activeUserSubject.next(this.activeUser);
         resolve(true);
       } else {
         resolve(false);
@@ -64,6 +68,7 @@ export class AuthenticationService {
 
   logout(): void {
     this.resetActiveUser();
+    this.activeUserSubject.next(this.activeUser);
     this.router.navigate(['/login']);
   }
 }

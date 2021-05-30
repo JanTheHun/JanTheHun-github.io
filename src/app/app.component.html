@@ -1,1 +1,21 @@
+<mat-toolbar color="primary">
+
+    <span>TheMovieDatabase - test project</span>
+
+    <span class="spacer"></span>
+
+    <ng-container *ngIf="user && user.isAuthenticated">
+        <span>{{user.userName}}</span>
+    </ng-container>
+
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+    </button>
+    
+</mat-toolbar>
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="onLogoutClick()">Logout</button>
+</mat-menu>
+
 <router-outlet></router-outlet>
