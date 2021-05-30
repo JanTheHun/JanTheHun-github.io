@@ -1,16 +1,13 @@
-<mat-card *ngFor="let movie of moviesList" class="movieCard">
+<mat-card *ngFor="let movie of moviesList" class="movieCard" >
 
   <mat-card-title class="movieCardTitle">
     {{movie.title}}
   </mat-card-title>
-  <mat-card-subtitle>
-    {{movie.release_date}}
-  </mat-card-subtitle>
   
   <img mat-card-image class="movieCardImage" [src]="movie.imageURI" />
 
-  <mat-card-action>
-    <button mat-button>Részletek</button>
+  <mat-card-action class="movieCardActions">
+    <button mat-button (click)="onDetailsClick(movie)">Details</button>
   </mat-card-action>
 </mat-card>
 

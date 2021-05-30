@@ -20,8 +20,17 @@ export class MovieDbApiService {
     })
   }
 
-  getUpcomingMovieList(params?: { page?: number }): Promise<any> {
+  getMovieDetails(movieId: number): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.get(`https://api.themoviedb.org/3/movie/${movieId}`).subscribe(response => {
+        resolve(response);
+      }, error => {
+        reject(error);
+      })
+    })
+  }
 
+  getUpcomingMovieList(params?: { page?: number }): Promise<any> {
     return new Promise((resolve, reject) => {
       const pageNrQueryParam: string = params && !isNaN(params.page) ? `?page=${params.page}` : ''
       this.http.get(`https://api.themoviedb.org/3/movie/upcoming${pageNrQueryParam}`).subscribe(response => {

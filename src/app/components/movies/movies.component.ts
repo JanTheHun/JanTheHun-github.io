@@ -1,5 +1,7 @@
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { MovieDbApiService } from 'src/app/services/movie-db-api.service';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MovieDetailsComponent } from 'src/app/components/movie-details/movie-details.component'
 
 @Component({
   selector: 'app-movies',
@@ -15,10 +17,24 @@ export class MoviesComponent implements OnInit {
   totalResults: number;
   moviesList: any[] = [];
   lastLoadedPage: number = 0;
+  movieDetailsDialog: MatDialogRef<MovieDetailsComponent>
 
   constructor(
+    private dialog: MatDialog,
     private movieDbService: MovieDbApiService
   ) {}
+
+  async onDetailsClick(movie: any): Promise<void> {
+    try {
+      let movieDetails: any = await this.movieDbService.getMovieDetails(movie.id);
+      this.movieDetailsDialog = this.dialog.open(MovieDetailsComponent, {
+        disableClose: true,
+        data: movieDetails
+      });
+    } catch(err) {
+      console.log(err);
+    }
+  }
 
   onPageBottomVisible(): void {
     this.loadNextPage();

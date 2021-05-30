@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+    
+<mat-dialog-content>
+    <p>{{data.release_date}}</p>
+    <p>
+        <mat-chip-list>
+            <mat-chip *ngFor="let genre of data.genres">
+                {{genre.name}}
+            </mat-chip>
+        </mat-chip-list>
+    </p>
+    <p>{{data.overview}}</p>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button (click)="onCloseDialog()">Close</button>
+</mat-dialog-actions>

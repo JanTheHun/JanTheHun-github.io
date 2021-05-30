@@ -12,7 +12,7 @@
 }
 
 .movieCardImage {
-    max-height: calc(100% - 120px);
+    max-height: calc(100% - 70px);
     object-fit: scale-down;
 }
 
@@ -24,4 +24,10 @@
     border: solid 1px;
     box-sizing: border-box;
     margin: 10px;
+}
+
+.movieCardActions {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
 }

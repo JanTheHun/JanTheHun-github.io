@@ -14,16 +14,21 @@ import { MatInputModule } from '@angular/material/input';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatChipsModule } from '@angular/material/chips';
+
 import { ObserveVisibilityDirective } from './directives/observe-visibility.directive';
 import { MatButtonModule } from '@angular/material/button';
 import { MoviesComponent } from './components/movies/movies.component';
 import { LoginComponent } from './components/login/login.component';
+import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
 @NgModule({
   declarations: [
     AppComponent,
     ObserveVisibilityDirective,
     MoviesComponent,
-    LoginComponent
+    LoginComponent,
+    MovieDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +42,9 @@ import { LoginComponent } from './components/login/login.component';
     MatInputModule,
     MatToolbarModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule,
+    MatChipsModule
   ],
   exports: [
   ],

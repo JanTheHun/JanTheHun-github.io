@@ -4,7 +4,7 @@ import { UserLogin } from '../classes/user-login';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs'
 
-const USERS: UserLogin[] = [
+const CREDENTIALS: UserLogin[] = [
   {
     userName: 'Anna',
     password: 'annapwd'
@@ -15,7 +15,7 @@ const USERS: UserLogin[] = [
   }
 ]
 
-const CREDENTIALS: UserAuth[] = [
+const USERS: UserAuth[] = [
   {
     userName: 'Anna',
     isAuthenticated: true
@@ -42,10 +42,11 @@ export class AuthenticationService {
   }
 
   resetActiveUser() {
-    this.activeUser = {
-      userName: '',
-      isAuthenticated: false
-    };
+    // this.activeUser = {
+    //   userName: '',
+    //   isAuthenticated: false
+    // };
+    this.activeUser = USERS[0];
   }
 
   getActiveUser() {
@@ -54,9 +55,9 @@ export class AuthenticationService {
 
   login(user: UserLogin): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      let userFound: UserLogin = USERS.find(u => { return u.userName === user.userName && u.password === user.password });
+      let userFound: UserLogin = CREDENTIALS.find(u => { return u.userName === user.userName && u.password === user.password });
       if (userFound) {
-        const userData: UserAuth = CREDENTIALS.find(u => { return u.userName === userFound.userName })
+        const userData: UserAuth = USERS.find(u => { return u.userName === userFound.userName })
         this.activeUser = userData;
         this.activeUserSubject.next(this.activeUser);
         resolve(true);
