@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -14,14 +15,22 @@ export class RegisterComponent implements OnInit {
   @ViewChild('userNameInputRef') userNameInput: ElementRef;
   @ViewChild('submitRegistrationRef') submitRegistration: HTMLButtonElement;
 
-
-  userName = new FormControl('', [Validators.required]);
-  password = new FormControl('', [Validators.required]);
-  passwordAgain = new FormControl('', [Validators.required]);
+  userName = new FormControl('', [Validators.required, Validators.minLength(3)]);
+  password = new FormControl('', [Validators.required, Validators.minLength(3)]);
+  passwordAgain = new FormControl('', [Validators.required, Validators.minLength(3)]);
+  wrongUsername: boolean = false;
 
   constructor(
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private router: Router
   ) { }
+
+  resetForm(): void {
+    this.userNameInput.nativeElement.focus();
+    this.userName.reset();
+    this.password.reset();
+    this.passwordAgain.reset();
+  }
 
   checkPasswords(): any {
     const password = this.password.value;
@@ -32,22 +41,22 @@ export class RegisterComponent implements OnInit {
   }
 
   onUserNameChange(): void {
-    if (this.userName.value.length) {
+    if (this.userName.valid) {
       this.passwordInput.nativeElement.focus();
     }
   }
   
   onPasswordChange(): void {
     this.checkPasswords();
-    if (this.password.value.length) {
+    if (this.password.valid) {
       this.passwordAgainInput.nativeElement.focus();
     }
   }
   
   onPasswordAgainChange(): void {
     this.checkPasswords();
-    if (this.passwordAgain.value.length) {
-      this.onSubmitRegistration();
+    if (this.passwordAgain.valid) {
+      this.submitRegistration.focus();
     }
   }
 
@@ -56,9 +65,10 @@ export class RegisterComponent implements OnInit {
       this.authenticationService.register({ userName: this.userName.value, password: this.password.value })
         .then(result => {
           if (result) {
-            console.log('success registering new user')
+            this.router.navigate(['/login']);
           } else {
-            console.log('existing user')
+            this.wrongUsername = true;
+            this.resetForm();
           }
         });
     }

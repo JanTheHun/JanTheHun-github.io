@@ -1,5 +1,7 @@
 <div id="loginForm">
 
+    <button mat-raised-button><a routerLink="/register" tabindex="-1">Register new user</a></button>
+    
     <mat-form-field appearance="outline" class="loginFormField">
         <mat-label>Username</mat-label>
         <input matInput type="text" [formControl]="userName" (change)="onUserNameChange()" #userNameInputRef autofocus />
@@ -21,7 +23,6 @@
 
     <div>
         <button mat-raised-button [disabled]="userName.invalid || password.invalid" (click)="onSubmitLogin()" #submitLoginRef>Login</button>
-        <button mat-raised-button><a routerLink="/register" tabindex="-1">Register new user</a></button>
     </div>
 
 </div>

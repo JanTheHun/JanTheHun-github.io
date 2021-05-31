@@ -1,23 +1,30 @@
 <div id="registerForm">
 
-    <mat-form-field appearance="outline">
+    <button mat-raised-button><a routerLink="/login">Login with existing user</a></button>
+    <mat-form-field appearance="outline" class="registerFormField">
         <mat-label>Username</mat-label>
         <input matInput type="text" [formControl]="userName" (change)="onUserNameChange()" #userNameInputRef autofocus />
-        <mat-error *ngIf="userName.invalid">Must provide a user name!</mat-error>
+        <mat-error *ngIf="userName.hasError('required')">Must provide a user name!</mat-error>
+        <mat-error *ngIf="userName.hasError('minlength')">User name must be at least 3 characters long!</mat-error>
     </mat-form-field>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="registerFormField">
         <mat-label>Password</mat-label>
         <input matInput type="password" [formControl]="password" (change)="onPasswordChange()" #passwordInputRef />
-        <mat-error *ngIf="password.invalid">Must provide a password!</mat-error>
+        <mat-error *ngIf="password.hasError('required')">Must provide a password!</mat-error>
+        <mat-error *ngIf="password.hasError('minlength')">Password must be at least 3 characters long!</mat-error>
     </mat-form-field>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="registerFormField">
         <mat-label>Password again</mat-label>
         <input matInput type="password" [formControl]="passwordAgain" (change)="onPasswordAgainChange()" #passwordAgainInputRef />
         <mat-error *ngIf="passwordAgain.invalid">Passwords must match!</mat-error>
     </mat-form-field>
+    <div id="wrongUsername">
+        <ng-container *ngIf="wrongUsername">
+            User name already exists!
+        </ng-container>
+    </div>
     <div>
         <button mat-raised-button (click)="onSubmitRegistration()" [disabled]="password.invalid || passwordAgain.invalid" #submitRegistrationRef>Submit Registration</button>
-        <button mat-raised-button><a routerLink="/login">Login with user</a></button>
     </div>
 
 </div>

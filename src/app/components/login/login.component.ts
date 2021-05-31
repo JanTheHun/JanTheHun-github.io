@@ -30,14 +30,13 @@ export class LoginComponent {
   }
 
   onUserNameChange() {
-    console.log(this.userName);
-    if (this.userName.value.length) {
+    if (this.userName.valid) {
       this.passwordInput.nativeElement.focus();
     }
   }
   
   onPasswordChange() {
-    if (this.password.value.length) {
+    if (this.password.valid) {
       this.submitLogin.focus();
     }
   }
