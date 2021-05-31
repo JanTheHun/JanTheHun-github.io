@@ -14,8 +14,8 @@ export class LoginComponent {
   @ViewChild('userNameInputRef') userNameInput: ElementRef;
   @ViewChild('submitLoginRef') submitLogin: HTMLButtonElement;
 
-  userName = new FormControl('', [Validators.required]);
-  password = new FormControl('', [Validators.required]);
+  userName = new FormControl('', [Validators.required, Validators.minLength(3)]);
+  password = new FormControl('', [Validators.required, Validators.minLength(3)]);
   wrongCredentials: boolean = false;
 
   constructor(
@@ -24,12 +24,13 @@ export class LoginComponent {
   ) { }
 
   resetLogin(): void {
-    this.userName.setValue('');
-    this.password.setValue('');
     this.userNameInput.nativeElement.focus();
+    this.userName.reset();
+    this.password.reset();
   }
 
   onUserNameChange() {
+    console.log(this.userName);
     if (this.userName.value.length) {
       this.passwordInput.nativeElement.focus();
     }
@@ -37,7 +38,7 @@ export class LoginComponent {
   
   onPasswordChange() {
     if (this.password.value.length) {
-      this.onSubmitLogin();
+      this.submitLogin.focus();
     }
   }
 

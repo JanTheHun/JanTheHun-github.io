@@ -1,14 +1,16 @@
 <div id="loginForm">
 
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="loginFormField">
         <mat-label>Username</mat-label>
         <input matInput type="text" [formControl]="userName" (change)="onUserNameChange()" #userNameInputRef autofocus />
-        <mat-error *ngIf="userName.invalid">Must provide a user name!</mat-error>
+        <mat-error *ngIf="userName.hasError('required')">Must provide a user name!</mat-error>
+        <mat-error *ngIf="userName.hasError('minlength')">User name must be at least 3 characters long!</mat-error>
     </mat-form-field>
-    <mat-form-field appearance="outline">
+    <mat-form-field appearance="outline" class="loginFormField">
         <mat-label>Password</mat-label>
         <input matInput type="password" [formControl]="password" (change)="onPasswordChange()" #passwordInputRef />
-        <mat-error *ngIf="password.invalid">Must provide a password!</mat-error>
+        <mat-error *ngIf="password.hasError('required')">Must provide a password!</mat-error>
+        <mat-error *ngIf="password.hasError('minlength')">Password must be at least 3 characters long!</mat-error>
     </mat-form-field>
 
     <div id="wrongCredentials">

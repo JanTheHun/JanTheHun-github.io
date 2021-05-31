@@ -65,6 +65,9 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    setTimeout(() => {
+      this.userNameInput.nativeElement.focus();
+    }, 0)
   }
 
 }
