@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { UserAuth } from '../classes/user-auth';
 import { UserLogin } from '../classes/user-login';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs'
+import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment'
 
 const CREDENTIALS: UserLogin[] = [
   {
@@ -37,16 +38,19 @@ export class AuthenticationService {
   constructor(
     private router: Router
   ) {
-    this.resetActiveUser();
+    if (environment.fakeLogin) {
+      this.activeUser = USERS[0];
+    } else {
+      this.resetActiveUser();
+    }
     this.activeUserSubject = new BehaviorSubject(this.activeUser)
   }
 
   resetActiveUser() {
-    // this.activeUser = {
-    //   userName: '',
-    //   isAuthenticated: false
-    // };
-    this.activeUser = USERS[0];
+    this.activeUser = {
+      userName: '',
+      isAuthenticated: false
+    };
   }
 
   getActiveUser() {

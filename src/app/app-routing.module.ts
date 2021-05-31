@@ -3,11 +3,17 @@ import { Routes, RouterModule } from '@angular/router';
 import { MoviesComponent } from './components/movies/movies.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from 'src/app/guards/auth.guard'
+import { DetailsComponent } from './components/details/details.component';
 
 const routes: Routes = [
   {
     path: 'movies',
     component: MoviesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'details/:id',
+    component: DetailsComponent,
     canActivate: [AuthGuard]
   },
   {

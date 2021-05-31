@@ -22,13 +22,15 @@ import { MatButtonModule } from '@angular/material/button';
 import { MoviesComponent } from './components/movies/movies.component';
 import { LoginComponent } from './components/login/login.component';
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
+import { DetailsComponent } from './components/details/details.component';
 @NgModule({
   declarations: [
     AppComponent,
     ObserveVisibilityDirective,
     MoviesComponent,
     LoginComponent,
-    MovieDetailsComponent
+    MovieDetailsComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,

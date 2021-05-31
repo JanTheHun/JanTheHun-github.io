@@ -1,0 +1,31 @@
+<button mat-raised-button (click)="onNavigateBack()" id="backBtn">Back to movies</button>
+<div id="movieDetails" *ngIf="details">
+
+    <h2 id="movieTitle">{{details.title}}</h2>
+
+    <h4>Overview</h4>
+    <p>{{details.overview}}</p>
+
+    <h4>Rating</h4>
+    <p>{{details.vote_average}}/10 ({{details.vote_count}} votes)</p>
+
+    <h4>Cast</h4>
+    <mat-card *ngFor="let actor of cast" class="actorCard">
+        {{actor.name}} ({{actor.character}})
+    </mat-card>
+
+    <h4>Reviews</h4>
+    <ng-container *ngIf="reviews.length else noReviews">
+        <div *ngFor="let review of reviews">
+            <a [href]="review.url" target="_blank">{{review.author}} ({{review.updated_at | date:'yyyy-MM-dd HH:mm'}})</a>
+            <!-- <p>{{review.author}}</p>
+            <p>{{review.content}}</p> -->
+        </div>
+
+    </ng-container>
+
+    <ng-template #noReviews>
+        <p>No reviews yet</p>
+    </ng-template>
+
+</div>

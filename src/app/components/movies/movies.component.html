@@ -1,26 +1,39 @@
-<mat-card *ngFor="let movie of moviesList" class="movieCard" >
+<div id="movies">
 
-  <mat-card-title class="movieCardTitle">
-    {{movie.title}}
-  </mat-card-title>
+  <div id="moviesHeader">
   
-  <img mat-card-image class="movieCardImage" [src]="movie.imageURI" />
+  </div>
+  
+  <div id="moviesList">
+  
+    <mat-card *ngFor="let movie of moviesList" class="movieCard" >
+    
+      <mat-card-title class="movieCardTitle">
+        {{movie.title}}
+      </mat-card-title>
+      
+      <img mat-card-image class="movieCardImage" [src]="movie.imageURI" />
+    
+      <mat-card-action class="movieCardActions">
+        <button mat-button (click)="onInfoClick(movie)">Info</button>
+        <button mat-button (click)="onNavigateToDetails(movie)">Details</button>
+      </mat-card-action>
+    </mat-card>
+    
+    <div id="pageBottom"
+      appObserveVisibility
+      [debounceTime]="300"
+      [threshold]="1"
+      (visible)="onPageBottomVisible()"
+      #pageBottom>
+      <ng-container *ngIf="(!lastLoadedPage || lastLoadedPage < totalPages) else noMorePages">
+        Load more
+      </ng-container>
+      <ng-template #noMorePages>
+        End of pages
+      </ng-template>  
+    </div>
+  
+  </div>
 
-  <mat-card-action class="movieCardActions">
-    <button mat-button (click)="onDetailsClick(movie)">Details</button>
-  </mat-card-action>
-</mat-card>
-
-<div id="pageBottom"
-  appObserveVisibility
-  [debounceTime]="300"
-  [threshold]="1"
-  (visible)="onPageBottomVisible()"
-  #pageBottom>
-  <ng-container *ngIf="(!lastLoadedPage || lastLoadedPage < totalPages) else noMorePages">
-    Load more
-  </ng-container>
-  <ng-template #noMorePages>
-    End of pages
-  </ng-template>  
 </div>

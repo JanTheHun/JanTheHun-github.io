@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { MovieDbApiService } from 'src/app/services/movie-db-api.service';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MovieDetailsComponent } from 'src/app/components/movie-details/movie-details.component'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movies',
@@ -18,13 +19,15 @@ export class MoviesComponent implements OnInit {
   moviesList: any[] = [];
   lastLoadedPage: number = 0;
   movieDetailsDialog: MatDialogRef<MovieDetailsComponent>
+  dateBefore: string = '2021-05-31';
 
   constructor(
+    private router: Router,
     private dialog: MatDialog,
     private movieDbService: MovieDbApiService
   ) {}
 
-  async onDetailsClick(movie: any): Promise<void> {
+  async onInfoClick(movie: any): Promise<void> {
     try {
       let movieDetails: any = await this.movieDbService.getMovieDetails(movie.id);
       this.movieDetailsDialog = this.dialog.open(MovieDetailsComponent, {
@@ -36,6 +39,10 @@ export class MoviesComponent implements OnInit {
     }
   }
 
+  onNavigateToDetails(movie: any): void {
+    this.router.navigate(['/details', movie.id])
+  }
+
   onPageBottomVisible(): void {
     this.loadNextPage();
   }
@@ -43,7 +50,8 @@ export class MoviesComponent implements OnInit {
   loadNextPage() {
     const nextPage: number = this.lastLoadedPage + 1;
     if (!this.totalPages || nextPage <= this.totalPages) {
-      this.movieDbService.getUpcomingMovieList({ page: nextPage })
+      // this.movieDbService.getUpcomingMovieList({ page: nextPage })
+      this.movieDbService.getMovieList({ page: nextPage, date: this.dateBefore })
         .then(upcomingMoviesResponse => {
           this.totalPages = upcomingMoviesResponse.total_pages;
           this.totalResults = upcomingMoviesResponse.total_results;

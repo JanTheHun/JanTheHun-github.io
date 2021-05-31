@@ -1,7 +1,8 @@
 <h2 mat-dialog-title>{{data.title}}</h2>
     
 <mat-dialog-content>
-    <p>{{data.release_date}}</p>
+    <p>Release date: {{data.release_date}}</p>
+    <p *ngIf="data.runtime">Length: {{data.runtime}} minutes</p>
     <p>
         <mat-chip-list>
             <mat-chip *ngFor="let genre of data.genres">
