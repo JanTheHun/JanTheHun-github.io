@@ -1,6 +1,5 @@
 <mat-toolbar color="primary">
 
-    <!-- <span>TheMovieDatabase - test project</span> -->
     <a [routerLink]="['/movies']">TheMovieDatabase - test project</a>
 
     <span class="spacer"></span>
@@ -16,6 +15,7 @@
 </mat-toolbar>
 
 <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="onNavigateToWatchlistClick()">Watchlist</button>
     <button mat-menu-item (click)="onLogoutClick()">Logout</button>
 </mat-menu>
 

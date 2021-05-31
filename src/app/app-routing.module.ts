@@ -4,6 +4,7 @@ import { MoviesComponent } from './components/movies/movies.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from 'src/app/guards/auth.guard'
 import { DetailsComponent } from './components/details/details.component';
+import { WatchlistComponent } from './components/watchlist/watchlist.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,11 @@ const routes: Routes = [
   {
     path: 'details/:id',
     component: DetailsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'watchlist',
+    component: WatchlistComponent,
     canActivate: [AuthGuard]
   },
   {

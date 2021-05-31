@@ -1,0 +1,3 @@
+<button mat-raised-button (click)="onNavigateBack()" id="backBtn">Back</button>
+
+<app-movie-card *ngFor="let movie of movieList" [movie]="movie"></app-movie-card>

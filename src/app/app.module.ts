@@ -23,6 +23,8 @@ import { MoviesComponent } from './components/movies/movies.component';
 import { LoginComponent } from './components/login/login.component';
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
 import { DetailsComponent } from './components/details/details.component';
+import { WatchlistComponent } from './components/watchlist/watchlist.component';
+import { MovieCardComponent } from './components/movie-card/movie-card.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +32,9 @@ import { DetailsComponent } from './components/details/details.component';
     MoviesComponent,
     LoginComponent,
     MovieDetailsComponent,
-    DetailsComponent
+    DetailsComponent,
+    WatchlistComponent,
+    MovieCardComponent
   ],
   imports: [
     BrowserModule,

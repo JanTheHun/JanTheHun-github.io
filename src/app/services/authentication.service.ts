@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { UserAuth } from '../classes/user-auth';
 import { UserLogin } from '../classes/user-login';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { environment } from 'src/environments/environment'
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { WatchlistService } from 'src/app/services/watchlist.service';
 
 const CREDENTIALS: UserLogin[] = [
   {
@@ -32,18 +33,28 @@ const USERS: UserAuth[] = [
 })
 export class AuthenticationService {
 
+  activeUserWatchlistSubscription: Subscription;
   activeUser: UserAuth;
   activeUserSubject: BehaviorSubject<UserAuth>;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private watchListService: WatchlistService
   ) {
     if (environment.fakeLogin) {
       this.activeUser = USERS[0];
+      this.activeUser.watchList = this.watchListService.getWatchlistForUser(this.activeUser.userName);
     } else {
       this.resetActiveUser();
     }
-    this.activeUserSubject = new BehaviorSubject(this.activeUser)
+    console.log(this.activeUser);
+    this.activeUserSubject = new BehaviorSubject(this.activeUser);
+    this.activeUserWatchlistSubscription = this.watchListService.userWatchlistSubject.subscribe(userWatchlist => {
+      let newActiveUser: UserAuth = Object.assign({}, this.activeUser)
+      newActiveUser.watchList = userWatchlist;
+      this.activeUser = newActiveUser;
+      this.activeUserSubject.next(this.activeUser);
+    });
   }
 
   resetActiveUser() {
@@ -61,7 +72,8 @@ export class AuthenticationService {
     return new Promise((resolve, reject) => {
       let userFound: UserLogin = CREDENTIALS.find(u => { return u.userName === user.userName && u.password === user.password });
       if (userFound) {
-        const userData: UserAuth = USERS.find(u => { return u.userName === userFound.userName })
+        let userData: UserAuth = USERS.find(u => { return u.userName === userFound.userName });
+        userData.watchList = this.watchListService.getWatchlistForUser(userData.userName);
         this.activeUser = userData;
         this.activeUserSubject.next(this.activeUser);
         resolve(true);

@@ -5,20 +5,8 @@
   </div>
   
   <div id="moviesList">
-  
-    <mat-card *ngFor="let movie of moviesList" class="movieCard" >
     
-      <mat-card-title class="movieCardTitle">
-        {{movie.title}}
-      </mat-card-title>
-      
-      <img mat-card-image class="movieCardImage" [src]="movie.imageURI" />
-    
-      <mat-card-action class="movieCardActions">
-        <button mat-button (click)="onInfoClick(movie)">Info</button>
-        <button mat-button (click)="onNavigateToDetails(movie)">Details</button>
-      </mat-card-action>
-    </mat-card>
+    <app-movie-card *ngFor="let movie of moviesList" [movie]="movie"></app-movie-card>
     
     <div id="pageBottom"
       appObserveVisibility

@@ -1,8 +1,7 @@
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { MovieDbApiService } from 'src/app/services/movie-db-api.service';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { MovieDetailsComponent } from 'src/app/components/movie-details/movie-details.component'
-import { Router } from '@angular/router';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UserAuth } from 'src/app/classes/user-auth';
 
 @Component({
   selector: 'app-movies',
@@ -18,30 +17,14 @@ export class MoviesComponent implements OnInit {
   totalResults: number;
   moviesList: any[] = [];
   lastLoadedPage: number = 0;
-  movieDetailsDialog: MatDialogRef<MovieDetailsComponent>
   dateBefore: string = '2021-05-31';
+  
+  user: UserAuth;
 
   constructor(
-    private router: Router,
-    private dialog: MatDialog,
-    private movieDbService: MovieDbApiService
+    private movieDbService: MovieDbApiService,
+    private authenticationService: AuthenticationService
   ) {}
-
-  async onInfoClick(movie: any): Promise<void> {
-    try {
-      let movieDetails: any = await this.movieDbService.getMovieDetails(movie.id);
-      this.movieDetailsDialog = this.dialog.open(MovieDetailsComponent, {
-        disableClose: true,
-        data: movieDetails
-      });
-    } catch(err) {
-      console.log(err);
-    }
-  }
-
-  onNavigateToDetails(movie: any): void {
-    this.router.navigate(['/details', movie.id])
-  }
 
   onPageBottomVisible(): void {
     this.loadNextPage();
@@ -88,7 +71,6 @@ export class MoviesComponent implements OnInit {
   }
 
   insertPageIntoMoviesList(page: number, movies: any[]) {
-    console.log(movies);
     let processedMoviesList: any[] = [...movies].map(m => {
       if (m.backdrop_path) {
         m.imageURI = this.configuration.images.secure_base_url.concat('w300').concat(m.backdrop_path);
@@ -106,15 +88,13 @@ export class MoviesComponent implements OnInit {
     this.lastLoadedPage = page;
   }
 
-  async initializeApp(): Promise<void> {
-    try {
-      this.configuration = await this.movieDbService.getConfiguration();
-    } catch(err) {
-      console.log(err)
-    }
-  }
-
   ngOnInit(): void {
-    this.initializeApp();
+    this.movieDbService.initializeApp();
+    this.authenticationService.activeUserSubject.subscribe(user => {
+      this.user = user;
+    })
+    this.movieDbService.configurationSubject.subscribe(configuration => {
+      this.configuration = configuration;
+    })
   }
 }

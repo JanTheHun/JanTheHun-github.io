@@ -1,14 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieDbApiService {
 
+  configurationSubject: BehaviorSubject<any> = new BehaviorSubject({})
   constructor(
     private http: HttpClient
   ) { }
+
+  async initializeApp(): Promise<void> {
+    try {
+      let configuration = await this.getConfiguration();
+      this.configurationSubject.next(configuration);
+    } catch(err) {
+      console.log(err)
+    }
+  }
 
   getConfiguration(): Promise<any> {
     return new Promise((resolve, reject) => {

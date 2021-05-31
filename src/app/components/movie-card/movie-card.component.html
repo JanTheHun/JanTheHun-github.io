@@ -1,0 +1,22 @@
+<mat-card class="movieCard" *ngIf="movie">
+
+    <mat-card-title class="movieCardTitle">
+        {{movie.title}}
+    </mat-card-title>
+
+    <img mat-card-image class="movieCardImage" [src]="movie.imageURI" />
+
+    <mat-card-action class="movieCardActions">
+        <button mat-button (click)="onInfoClick(movie)">Info</button>
+        <button mat-button (click)="onNavigateToDetails(movie)">Details</button>
+
+        <ng-container *ngIf="isMovieOnWatchlist(movie.id) else notOnList">
+        <button mat-button (click)="onRemoveFromWatchList(movie)">Remove from watchlist</button>
+        </ng-container>
+        <ng-template #notOnList>
+        <button mat-button (click)="onAddToWatchList(movie)">Add to watchlist</button>
+        </ng-template>
+
+    </mat-card-action>
+
+</mat-card>

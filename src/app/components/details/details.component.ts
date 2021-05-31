@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { MovieDbApiService } from 'src/app/services/movie-db-api.service';
 
 @Component({
@@ -15,12 +16,12 @@ export class DetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
+    private location: Location,
     private movieDbService: MovieDbApiService
   ) { }
 
   onNavigateBack() {
-    this.router.navigate(['/movies'])
+    this.location.back();
   }
 
   async loadAllDetails(movieId: number): Promise<void> {
@@ -37,8 +38,6 @@ export class DetailsComponent implements OnInit {
         console.log('cast:', this.cast);
         console.log('reviews:', this.reviews);
       })
-      // let movieDetails: any = await this.movieDbService.getMovieDetails(Number(movieId));
-      // console.log(movieDetails)
     } catch(err) {
       console.log(err);
     }
@@ -46,7 +45,6 @@ export class DetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      // console.log(params.get('id')); 
       this.loadAllDetails(Number(params.get('id')));
     });
   

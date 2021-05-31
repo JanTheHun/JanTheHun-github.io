@@ -1,4 +1,4 @@
-<button mat-raised-button (click)="onNavigateBack()" id="backBtn">Back to movies</button>
+<button mat-raised-button (click)="onNavigateBack()" id="backBtn">Back</button>
 <div id="movieDetails" *ngIf="details">
 
     <h2 id="movieTitle">{{details.title}}</h2>
@@ -18,8 +18,6 @@
     <ng-container *ngIf="reviews.length else noReviews">
         <div *ngFor="let review of reviews">
             <a [href]="review.url" target="_blank">{{review.author}} ({{review.updated_at | date:'yyyy-MM-dd HH:mm'}})</a>
-            <!-- <p>{{review.author}}</p>
-            <p>{{review.content}}</p> -->
         </div>
 
     </ng-container>

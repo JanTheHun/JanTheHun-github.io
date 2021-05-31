@@ -10,12 +10,16 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   
-  user: UserAuth
+  user: UserAuth;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService
   ) {}
+
+  onNavigateToWatchlistClick() {
+    this.router.navigate(['/watchlist']);
+  }
 
   onLogoutClick(): void {
     this.authenticationService.logout();
