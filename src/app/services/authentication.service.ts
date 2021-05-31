@@ -33,15 +33,7 @@ export class AuthenticationService {
   ) {
     let usersInLocalStorage: UserLogin[] = this.getUsersFromStorage();
     this.userList = CREDENTIALS.concat(usersInLocalStorage);
-    if (environment.fakeLogin) {
-      this.activeUser = {
-        userName: this.userList[0].userName,
-        isAuthenticated: true
-      };
-      this.activeUser.watchList = this.watchListService.getWatchlistForUser(this.activeUser.userName);
-    } else {
-      this.resetActiveUser();
-    }
+    this.resetActiveUser();
     this.activeUserSubject = new BehaviorSubject(this.activeUser);
     this.activeUserWatchlistSubscription = this.watchListService.userWatchlistSubject.subscribe(userWatchlist => {
       let newActiveUser: UserAuth = Object.assign({}, this.activeUser)
