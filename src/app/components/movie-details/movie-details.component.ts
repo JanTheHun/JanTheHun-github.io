@@ -22,7 +22,6 @@ export class MovieDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.data);
   }
 
 }

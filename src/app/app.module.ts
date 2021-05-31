@@ -6,7 +6,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ApiKeyInterceptor } from './interceptors/api-key.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -25,6 +26,7 @@ import { MovieDetailsComponent } from './components/movie-details/movie-details.
 import { DetailsComponent } from './components/details/details.component';
 import { WatchlistComponent } from './components/watchlist/watchlist.component';
 import { MovieCardComponent } from './components/movie-card/movie-card.component';
+import { RegisterComponent } from './components/register/register.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,11 +36,13 @@ import { MovieCardComponent } from './components/movie-card/movie-card.component
     MovieDetailsComponent,
     DetailsComponent,
     WatchlistComponent,
-    MovieCardComponent
+    MovieCardComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,

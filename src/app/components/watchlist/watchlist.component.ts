@@ -53,20 +53,20 @@ export class WatchlistComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let user: UserAuth = this.authenticationService.getActiveUser();
-    this.watchlist = this.watchlistService.getWatchlistForUser(user.userName);
-    console.log(this.watchlist);
-    this.loadMovieDetails();
-    this.authenticationService.activeUserSubject.subscribe(user => {
-      this.watchlist = user.watchList;
-      let newMovieList: any[] = [...this.movieList].filter(m => {
-        return this.watchlist.indexOf(m.id) !== -1;
-      })
-      this.movieList = newMovieList;
-    })
     this.movieDbService.configurationSubject.subscribe(configuration => {
       this.configuration = configuration;
-    })
+      if (this.configuration) {
+        let user: UserAuth = this.authenticationService.getActiveUser();
+        this.watchlist = this.watchlistService.getWatchlistForUser(user.userName);
+        this.loadMovieDetails();
+        this.authenticationService.activeUserSubject.subscribe(user => {
+          this.watchlist = user.watchList;
+          let newMovieList: any[] = [...this.movieList].filter(m => {
+            return this.watchlist.indexOf(m.id) !== -1;
+          })
+          this.movieList = newMovieList;
+        })
+      }
+    })    
   }
-
 }

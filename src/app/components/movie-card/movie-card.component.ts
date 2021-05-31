@@ -17,6 +17,7 @@ export class MovieCardComponent implements OnInit {
   user: UserAuth;
   @Input() movie: any;
   movieDetailsDialog: MatDialogRef<MovieDetailsComponent>;
+  cardHovered: boolean = false;
 
   constructor(
     private router: Router,
@@ -43,7 +44,6 @@ export class MovieCardComponent implements OnInit {
   }
 
   onAddToWatchList(movie: any): void {
-    console.log(movie);
     this.watchListService.addMovieToWatchlist(movie.id, this.user.userName);
   }
 

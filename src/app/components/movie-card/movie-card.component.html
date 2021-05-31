@@ -1,4 +1,4 @@
-<mat-card class="movieCard" *ngIf="movie">
+<mat-card class="movieCard" *ngIf="movie" (mouseenter)="cardHovered = true;" (mouseleave)="cardHovered = false;">
 
     <mat-card-title class="movieCardTitle">
         {{movie.title}}
@@ -11,10 +11,10 @@
         <button mat-button (click)="onNavigateToDetails(movie)">Details</button>
 
         <ng-container *ngIf="isMovieOnWatchlist(movie.id) else notOnList">
-        <button mat-button (click)="onRemoveFromWatchList(movie)">Remove from watchlist</button>
+            <button mat-button (click)="onRemoveFromWatchList(movie)">Remove from watchlist</button>
         </ng-container>
         <ng-template #notOnList>
-        <button mat-button (click)="onAddToWatchList(movie)">Add to watchlist</button>
+            <button *ngIf="cardHovered" mat-button (click)="onAddToWatchList(movie)">Add to watchlist</button>
         </ng-template>
 
     </mat-card-action>

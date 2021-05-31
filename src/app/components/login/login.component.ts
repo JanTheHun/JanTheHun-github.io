@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service'
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +14,8 @@ export class LoginComponent {
   @ViewChild('userNameInputRef') userNameInput: ElementRef;
   @ViewChild('submitLoginRef') submitLogin: HTMLButtonElement;
 
-  userName: string = '';
-  password: string = '';
-
+  userName = new FormControl('', [Validators.required]);
+  password = new FormControl('', [Validators.required]);
   wrongCredentials: boolean = false;
 
   constructor(
@@ -24,33 +24,35 @@ export class LoginComponent {
   ) { }
 
   resetLogin(): void {
-    this.userName = '';
-    this.password = '';
+    this.userName.setValue('');
+    this.password.setValue('');
     this.userNameInput.nativeElement.focus();
   }
 
   onUserNameChange() {
-    if (this.userName.length) {
+    if (this.userName.value.length) {
       this.passwordInput.nativeElement.focus();
     }
   }
   
   onPasswordChange() {
-    if (this.password.length) {
-      this.submitLogin.focus();
+    if (this.password.value.length) {
+      this.onSubmitLogin();
     }
   }
 
   onSubmitLogin() {
-    this.authenticationService.login({ userName: this.userName, password: this.password })
-      .then(result => {
-        if (result) {
-          this.router.navigate(['/movies']);
-        } else {
-          this.wrongCredentials = true;
-          this.resetLogin();
-        }
-      });    
+    if (!this.userName.hasError('required') && !this.password.hasError('required')) {
+      this.authenticationService.login({ userName: this.userName.value, password: this.password.value })
+        .then(result => {
+          if (result) {
+            this.router.navigate(['/movies']);
+          } else {
+            this.wrongCredentials = true;
+            this.resetLogin();
+          }
+        });
+    }
   }
 
   ngAfterViewInit() {

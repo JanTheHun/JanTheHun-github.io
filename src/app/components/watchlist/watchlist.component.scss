@@ -4,3 +4,12 @@
     left: 10px;
     z-index: 2;
 }
+
+#watchList {
+    position: relative;
+    width: calc(100% - 200px);
+    padding: 0px 100px 0px 100px;
+    height: 100%;
+    overflow-y: auto;
+
+}

@@ -1,4 +1,4 @@
-<div id="loginForm">
+<div id="registerForm">
 
     <mat-form-field appearance="outline">
         <mat-label>Username</mat-label>
@@ -10,16 +10,14 @@
         <input matInput type="password" [formControl]="password" (change)="onPasswordChange()" #passwordInputRef />
         <mat-error *ngIf="password.invalid">Must provide a password!</mat-error>
     </mat-form-field>
-
-    <div id="wrongCredentials">
-        <ng-container *ngIf="wrongCredentials">
-            Wrong user name and/or password!
-        </ng-container>
-    </div>
-
+    <mat-form-field appearance="outline">
+        <mat-label>Password again</mat-label>
+        <input matInput type="password" [formControl]="passwordAgain" (change)="onPasswordAgainChange()" #passwordAgainInputRef />
+        <mat-error *ngIf="passwordAgain.invalid">Passwords must match!</mat-error>
+    </mat-form-field>
     <div>
-        <button mat-raised-button [disabled]="userName.invalid || password.invalid" (click)="onSubmitLogin()" #submitLoginRef>Login</button>
-        <button mat-raised-button><a routerLink="/register" tabindex="-1">Register new user</a></button>
+        <button mat-raised-button (click)="onSubmitRegistration()" [disabled]="password.invalid || passwordAgain.invalid" #submitRegistrationRef>Submit Registration</button>
+        <button mat-raised-button><a routerLink="/login">Login with user</a></button>
     </div>
 
 </div>

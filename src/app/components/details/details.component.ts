@@ -33,11 +33,7 @@ export class DetailsComponent implements OnInit {
       ]).then(results => {
         this.details = results[0];
         this.cast = results[1].cast;
-        this.reviews = results[2].results;
-        console.log('details:', this.details);
-        console.log('cast:', this.cast);
-        console.log('reviews:', this.reviews);
-      })
+        this.reviews = results[2].results;      })
     } catch(err) {
       console.log(err);
     }

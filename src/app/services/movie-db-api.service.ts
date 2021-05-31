@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class MovieDbApiService {
 
-  configurationSubject: BehaviorSubject<any> = new BehaviorSubject({})
+  configurationSubject: BehaviorSubject<any> = new BehaviorSubject(null)
   constructor(
     private http: HttpClient
   ) { }

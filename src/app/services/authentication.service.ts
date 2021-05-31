@@ -8,23 +8,12 @@ import { WatchlistService } from 'src/app/services/watchlist.service';
 
 const CREDENTIALS: UserLogin[] = [
   {
-    userName: 'Anna',
-    password: 'annapwd'
+    userName: 'Alice',
+    password: 'alicepwd'
   },
   {
-    userName: 'Botond',
-    password: 'botondpwd'
-  }
-]
-
-const USERS: UserAuth[] = [
-  {
-    userName: 'Anna',
-    isAuthenticated: true
-  },
-  {
-    userName: 'Botond',
-    isAuthenticated: true
+    userName: 'Bob',
+    password: 'bobpwd'
   }
 ]
 
@@ -33,6 +22,7 @@ const USERS: UserAuth[] = [
 })
 export class AuthenticationService {
 
+  userList: UserLogin[]
   activeUserWatchlistSubscription: Subscription;
   activeUser: UserAuth;
   activeUserSubject: BehaviorSubject<UserAuth>;
@@ -41,13 +31,17 @@ export class AuthenticationService {
     private router: Router,
     private watchListService: WatchlistService
   ) {
+    let usersInLocalStorage: UserLogin[] = this.getUsersFromStorage();
+    this.userList = CREDENTIALS.concat(usersInLocalStorage);
     if (environment.fakeLogin) {
-      this.activeUser = USERS[0];
+      this.activeUser = {
+        userName: this.userList[0].userName,
+        isAuthenticated: true
+      };
       this.activeUser.watchList = this.watchListService.getWatchlistForUser(this.activeUser.userName);
     } else {
       this.resetActiveUser();
     }
-    console.log(this.activeUser);
     this.activeUserSubject = new BehaviorSubject(this.activeUser);
     this.activeUserWatchlistSubscription = this.watchListService.userWatchlistSubject.subscribe(userWatchlist => {
       let newActiveUser: UserAuth = Object.assign({}, this.activeUser)
@@ -55,6 +49,15 @@ export class AuthenticationService {
       this.activeUser = newActiveUser;
       this.activeUserSubject.next(this.activeUser);
     });
+  }
+
+  getUsersFromStorage(): UserLogin[] {
+    let usersInStorage: UserLogin[] = []
+    let users: any = JSON.parse(localStorage.getItem('users'));
+    if (users && Object.prototype.toString.call(users) === '[object Array]') {
+      usersInStorage = users;
+    }
+    return usersInStorage;
   }
 
   resetActiveUser() {
@@ -68,11 +71,33 @@ export class AuthenticationService {
     return this.activeUser;
   }
 
+  register(user: UserLogin): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      let userFound: UserLogin = this.userList.find(u => { return u.userName === user.userName });
+      if (!userFound) {
+        
+        let usersInStorage: UserLogin[] = JSON.parse(localStorage.getItem('users')) || [];
+        usersInStorage.push(user);
+        localStorage.setItem('users', JSON.stringify(usersInStorage));
+        let newUserList: UserLogin[] = Object.assign([], this.userList);
+        newUserList.push(user);
+        this.userList = newUserList;
+        console.log('new user list:', this.userList);
+        resolve(true);
+      } else {
+        resolve(false);
+      }
+    })
+  }
+
   login(user: UserLogin): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      let userFound: UserLogin = CREDENTIALS.find(u => { return u.userName === user.userName && u.password === user.password });
+      let userFound: UserLogin = this.userList.find(u => { return u.userName === user.userName && u.password === user.password });
       if (userFound) {
-        let userData: UserAuth = USERS.find(u => { return u.userName === userFound.userName });
+        let userData: UserAuth = {
+          userName: userFound.userName,
+          isAuthenticated: true
+        }
         userData.watchList = this.watchListService.getWatchlistForUser(userData.userName);
         this.activeUser = userData;
         this.activeUserSubject.next(this.activeUser);

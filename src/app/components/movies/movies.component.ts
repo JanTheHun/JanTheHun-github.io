@@ -89,7 +89,6 @@ export class MoviesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.movieDbService.initializeApp();
     this.authenticationService.activeUserSubject.subscribe(user => {
       this.user = user;
     })
