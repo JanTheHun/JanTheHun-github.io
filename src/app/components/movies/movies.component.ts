@@ -17,14 +17,16 @@ export class MoviesComponent implements OnInit {
   totalResults: number;
   moviesList: any[] = [];
   lastLoadedPage: number = 0;
-  dateBefore: string = '2021-05-31';
+  dateBefore: string;
   
   user: UserAuth;
 
   constructor(
     private movieDbService: MovieDbApiService,
     private authenticationService: AuthenticationService
-  ) {}
+  ) {
+    this.dateBefore = new Date().toISOString().substr(0,10);
+  }
 
   onPageBottomVisible(): void {
     this.loadNextPage();
