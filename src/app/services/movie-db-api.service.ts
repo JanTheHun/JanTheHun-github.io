@@ -76,6 +76,7 @@ export class MovieDbApiService {
     let queryParams: any = new HttpParams()
     queryParams = queryParams.append('release_date.lte', params.date);
     queryParams = queryParams.append('page', params.page);
+    queryParams = queryParams.append('sort_by', 'release_date.desc');
     return new Promise((resolve, reject) => {
       this.http.get('https://api.themoviedb.org/3/discover/movie', { params: queryParams }).subscribe(response => {
         resolve(response);
