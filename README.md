@@ -1,27 +1,16 @@
-# Teszt
+## Film DB App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.3.
+Az applikációval kereshetsz filmeket és összeállíthatod a saját watch list-edet. A filmekhez sok hasznos információt is megjelenít a felhasználónak.
 
-## Development server
+### Használható MoviesDB API: https://developers.themoviedb.org/3
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### User Story-k
+- A felhasználó a főoldalon látja az összes új filmet
+- A felhasználó a főoldalon lefelé görgetve release date alapján látja a filmeket
+- A felhasználó el tud menteni “watch list”-et azokból a filmekből amelyeket meg szeretne nézni
+- A felhasználó rákattinthat bármelyik filmre és tovább navigál a film oldalára (details page)
+- Egy adott film oldalán a felhasználó látja a film részletes adatait: film leírás, rating, színészek, review-k.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Bónusz feature-ök
+- A felhasználó létre tud hozni saját fiókot.
+- A felhasználó saját watch list-et tud létrehozni.
